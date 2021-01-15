@@ -47,10 +47,10 @@ export default [
             redirect: '/post/frontEnd',
           },
           {
-            path: '/post/frontEnd',
+            path: '/post/frontEnd/:id?',
             component: '@/pages/post/frontEnd',
             title: '前端',
-            icon: 'VideoCameraOutlined',
+            icon: 'UserOutlined',
           },
           {
             path: '/post/backEnd',

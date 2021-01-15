@@ -8,8 +8,17 @@ export default defineConfig({
   antd: {},
   // layout: {
   //   name: 'Ant Design Pro',
-  //   locale: true,
+  //   locale: false, // 国际化
   //   siderWidth: 208,
+  //   layout: 'side',
+  //   logo: '',
+  //   navTheme: 'dark',
+  //   primaryColor: '#1890ff',
+  //   contentWidth: 'Fluid',
+  //   fixedHeader: true,
+  //   fixSiderbar: false,
+  //   title: false,
+  //   pwa: false,
   // },
   title: 'Test', // 项目标题
   routes,
@@ -32,10 +41,10 @@ export default defineConfig({
     // 异步加载设置
     loading: '@ant-design/pro-layout/es/PageLoading',
   },
-  targets: { 
+  targets: {
     // 配置浏览器兼容（对象合并），默认 { chrome: 49, firefox: 64, safari: 10, edge: 13, ios: 10 }
-    ie: 11,
-    ios: false
+    ie: 10,
+    ios: false,
   },
   theme: {
     'primary-color': 'red',
