@@ -13,6 +13,7 @@
 export default [
   {
     path: '/login',
+    name: 'login',
     component: '@/pages/login',
     title: '登录',
   },
@@ -26,18 +27,21 @@ export default [
       },
       {
         path: '/home',
+        name: 'home',
         component: '@/pages/home',
         title: '首页',
         icon: 'UserOutlined',
       },
       {
         path: '/about',
+        name: 'about',
         component: '@/pages/about',
         title: '关于',
         icon: 'VideoCameraOutlined',
       },
       {
         path: '/post',
+        name: 'post',
         component: '@/layouts/post',
         title: '文章',
         icon: 'UploadOutlined',
@@ -47,20 +51,30 @@ export default [
             redirect: '/post/frontEnd',
           },
           {
-            path: '/post/frontEnd',
+            path: '/post/frontEnd/:id?',
+            name: 'postFrontEnd',
             component: '@/pages/post/frontEnd',
             title: '前端',
             icon: 'VideoCameraOutlined',
           },
           {
             path: '/post/backEnd',
+            name: 'postBackEnd',
             component: '@/pages/post/backEnd',
             title: '后端',
             icon: 'VideoCameraOutlined',
           },
         ],
       },
+      {
+        path: '/test',
+        name: 'test',
+        title: '测试',
+        isLocal: true,
+        component: '@/pages/test',
+        icon: 'VideoCameraOutlined',
+      },
+      { component: '@/pages/404', name: '404', },
     ],
   },
-  { component: '@/pages/404' },
 ];

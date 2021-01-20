@@ -22,7 +22,7 @@ export default defineConfig({
   // },
   title: 'Test', // 项目标题
   routes,
-  favicon: '/static/logo.png',
+  // favicon: '/static/logo.png',
   base: '/', // 部署路径
   publicPath: '/static/', // 静态资源访问目录
   hash: true, // build 文件 hash 后缀

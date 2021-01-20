@@ -11,8 +11,7 @@ const BasicLayout = (props) => {
   useEffect(() => {
     //  TODO:
     console.log(location.pathname);
-
-    onRouteChange(route.routes.filter((v) => v.title)[0]);
+    // onRouteChange(route.routes.filter((v) => v.title)[0]);
   }, []);
   // 监听路由变化
   useEffect(() => {

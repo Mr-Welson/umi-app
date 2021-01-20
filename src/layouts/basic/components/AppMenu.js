@@ -24,12 +24,12 @@ const AppMenu = (props) => {
         if (menu.routes && menu.routes.length) {
           const subMenuList = menu.routes.filter((v) => v.title);
           return (
-            <SubMenu key={menu.path} icon={<MenuIcon />} title={menu.title}>
+            <SubMenu key={menu.name} icon={<MenuIcon />} title={menu.title}>
               {subMenuList.map((subMenu) => {
                 let SubMenuIcon = Icon[subMenu.icon];
                 return (
                   <MenuItem
-                    key={subMenu.path}
+                    key={subMenu.name}
                     icon={<SubMenuIcon />}
                     onClick={() => onRouteChange(subMenu)}
                   >
@@ -42,7 +42,7 @@ const AppMenu = (props) => {
         } else {
           return (
             <MenuItem
-              key={menu.path}
+              key={menu.name}
               icon={<MenuIcon />}
               onClick={() => onRouteChange(menu)}
             >
