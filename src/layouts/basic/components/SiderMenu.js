@@ -28,7 +28,9 @@ const BasicLayout = (props) => {
           </span>
         </Header>
         <RouteTab {...props} />
-        <Content className="app-content">{props.children}</Content>
+        <Content className="app-content">
+          {props.children}
+        </Content>
       </Layout>
     </Layout>
   );

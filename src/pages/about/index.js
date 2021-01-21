@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'umi';
 
-const About = () => {
+const About = (props) => {
   return (
     <div> 
       关于 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useModel } from 'umi';
 import { Menu } from 'antd';
 import * as Icon from '@ant-design/icons';
@@ -7,10 +7,19 @@ const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
 const AppMenu = (props) => {
-  console.log('props==', props);
-  const { route } = props;
-  const menuList = route.routes.filter((v) => v.title);
-  const { activeKey, onRouteChange } = useModel('useTabRouteModel');
+  console.log('=== AppMenu ===', props);
+  const { route, history } = props;
+  const [menuList] = useState(() => route.routes.filter((v) => v.title && !v.hideInMenu))
+
+  const { setRouteList, activeKey } = useModel('useTabRouteModel');
+  useEffect(() => {
+    console.log(111111);
+    setRouteList(route.routes)
+  }, [])
+
+  const onMenuClick = useCallback((menu) => {
+    history.push(menu.path)
+  }, [])
 
   return (
     <Menu
@@ -31,7 +40,7 @@ const AppMenu = (props) => {
                   <MenuItem
                     key={subMenu.name}
                     icon={<SubMenuIcon />}
-                    onClick={() => onRouteChange(subMenu)}
+                    onClick={() => onMenuClick(subMenu)}
                   >
                     {subMenu.title}
                   </MenuItem>
@@ -44,7 +53,7 @@ const AppMenu = (props) => {
             <MenuItem
               key={menu.name}
               icon={<MenuIcon />}
-              onClick={() => onRouteChange(menu)}
+              onClick={() => onMenuClick(menu)}
             >
               {menu.title}
             </MenuItem>

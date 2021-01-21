@@ -8,17 +8,28 @@ import zhCN from 'antd/lib/locale/zh_CN';
  */
 
 /**
+* render。
+* @desc 覆写 render, 比如用于渲染之前做权限校验，
+* @param {*} oldRender 
+*/
+export function render(oldRender) {
+  console.log('=====  render =====');
+  oldRender()
+}
+
+
+/**
  * patchRoutes
  * @desc 修改路由，直接修改routes，不需要返回
  * @param {*} routes
  */
 export function patchRoutes({ routes }) {
   console.log('=====  patchRoutes =====');
-  console.log(routes);
-  const pageRoute = routes.find(v => v.path === '/');
-  if(process.env.NODE_ENV === 'product') {
+  let pageRoutes = routes.find(v => v.path === '/').routes;
+  // TODO: 过滤权限
+  if (process.env.NODE_ENV === 'product') {
     // 过滤本地路由
-    pageRoute.routes = pageRoute.routes.filter(v => !v.isLocal)
+    pageRoutes = pageRoutes.filter(v => !v.isLocal)
   }
 }
 
@@ -28,7 +39,8 @@ export function patchRoutes({ routes }) {
  * @param {*} container
  * @param {Object} {history, plugin, routes}
  */
-export function rootContainer(container) {
+export function rootContainer(container, { routes, history }) {
+  console.log('=====  rootContainer =====');
   return React.createElement(ConfigProvider, { locale: zhCN }, container);
 }
 
@@ -40,13 +52,13 @@ export function rootContainer(container) {
  * @param {*} location
  * @param {*} action
  */
-export function onRouteChange({ routes, matchedRoutes, location, action }) {
-  console.log('=====  onRouteChange =====');
-  console.log(location);
-  console.log(matchedRoutes);
-  if (matchedRoutes.length) {
-    const currentRoute = matchedRoutes[matchedRoutes.length - 1];
-  }
-}
+// export function onRouteChange({ routes, matchedRoutes, location, action }) {
+//   console.log('=====  onRouteChange =====');
+//   console.log(location);
+//   console.log(matchedRoutes);
+//   if (matchedRoutes.length) {
+//     const currentRoute = matchedRoutes[matchedRoutes.length - 1];
+//   }
+// }
 
 

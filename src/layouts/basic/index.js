@@ -1,23 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useModel } from 'umi';
 import SiderMenu from './components/SiderMenu';
 
 import './index.less';
 
 const BasicLayout = (props) => {
+  console.log('=== BasicLayout ===', props);
   const { route, location } = props;
-  const { setActiveKey, onRouteChange } = useModel('useTabRouteModel');
+  const { setActiveKey, onPathChange } = useModel('useTabRouteModel');
 
-  useEffect(() => {
-    //  TODO:
-    console.log(location.pathname);
-    // onRouteChange(route.routes.filter((v) => v.title)[0]);
-  }, []);
+
   // 监听路由变化
   useEffect(() => {
-    setActiveKey(location.pathname);
     // TODO: 手动输入路由时需要初始化项目
-    // onRouteChange(routeInfo)
+    console.log(22222);
+    onPathChange({ location })
   }, [location.pathname]);
 
   return <SiderMenu {...props} />;
