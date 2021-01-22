@@ -19,18 +19,18 @@ export function render(oldRender) {
 
 /**
  * patchRoutes
- * @desc 修改路由，直接修改routes，不需要返回
+ * @desc 修改路由，直接修改routes，不需要返回值
  * @param {*} routes
  */
 export function patchRoutes({ routes }) {
-  console.log('=====  patchRoutes =====');
+  // console.log('=====  patchRoutes =====');
   let pageRoutes = routes.find(v => v.path === '/').routes;
   // TODO: 过滤权限
   if (process.env.NODE_ENV === 'product') {
     // 过滤本地路由
     pageRoutes = pageRoutes.filter(v => !v.isLocal)
   } else {
-    console.log(pageRoutes);
+    // console.log(pageRoutes);
   }
 }
 
@@ -41,12 +41,11 @@ export function patchRoutes({ routes }) {
  * @param {Object} {history, plugin, routes}
  */
 export function rootContainer(container, { routes, history }) {
-  console.log('=====  rootContainer =====');
   return React.createElement(ConfigProvider, { locale: zhCN }, container);
 }
 
 /**
- * patchRoutes
+ * onRouteChange
  * @desc 在初始加载和路由切换时做一些事情
  * @param {*} routes
  * @param {*} matchedRoutes

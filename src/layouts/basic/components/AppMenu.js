@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React from 'react';
 import { useModel } from 'umi';
 import { Menu } from 'antd';
 import * as Icon from '@ant-design/icons';
@@ -8,15 +8,14 @@ const SubMenu = Menu.SubMenu;
 
 const AppMenu = (props) => {
   console.log('=== AppMenu ===', props);
-  const { routeList, activeKey, onMenuClick } = useModel('useTabRouteModel');
-  const menuList = useMemo(() => routeList.filter(v => !v.hideInMenu), [routeList])
+  const { menuList, activeKey, onMenuClick } = useModel('useTabRouteModel');
 
   return (
     <Menu
       className="app-menu"
       theme="dark"
       mode="inline"
-      selectedKeys={[activeKey]}
+      selectedKeys={activeKey.split('-')}
     >
       {menuList.map((menu) => {
         let MenuIcon = Icon[menu.icon];

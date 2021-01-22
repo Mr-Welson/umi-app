@@ -5,7 +5,7 @@ import { CloseOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
-const RouteTab = (props) => {
+const RouteTab = () => {
   const { activeKey, tabList, onMenuClose, onMenuClick } = useModel(
     'useTabRouteModel',
   );
@@ -19,7 +19,7 @@ const RouteTab = (props) => {
     <Tabs hideAdd activeKey={activeKey} className="app-tab-list">
       {tabList.map(({ route }) => (
         <TabPane
-          key={route.name}
+          key={`${route?.parentName.join('-')}-${route.name}`}
           tab={
             <div className="app-tab-item" onClick={() => onMenuClick(route)}>
               <span>{route.title}</span>

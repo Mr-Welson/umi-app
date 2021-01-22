@@ -7,6 +7,8 @@ export default function useTabRouteModel() {
   const [routeList, setRouteList] = useState([]);
   // 页签集合
   const [tabList, setTabList] = useState([]);
+  // 渲染的菜单集合
+  const [menuList, setMenuList] = useState([]);
   // 当前激活菜单和页签的 name
   const [activeKey, setActiveKey] = useState('');
 
@@ -39,25 +41,26 @@ export default function useTabRouteModel() {
    * pathname 监听
    */
   const onPathChange = useCallback(({ location }) => {
-    console.log('=== routeList ===', routeList);
-    console.log('=== tabList ===', tabList);
-    console.log('=== location ===', location);
-    // 1. 页面已打开，直接切换
-    const tabExist = tabList.find((v) => v.location.pathname === location.pathname);
-    if (tabExist) {
-      return setActiveKey(tabExist.route.name);
-    }
-    // 2. 页面未打开
-    // 3. 根据 pathname 获取匹配路由信息
+    // 1. 根据 pathname 获取匹配路由信息
     const matchRoutes = getMatchRoute(routeList, location.pathname);
+    console.log(routeList);
     console.log('matchRoutes==', matchRoutes);
-    // 4.1 未匹配 -> 404
+    // 2. 未匹配 -> 404
     if (!matchRoutes) {
       return
     }
+    // 3. 路由匹配
+    // 4.1. 页面已打开，直接切换
+    const tabExist = tabList.find((v) => v.route.name === matchRoutes.name);
+    if (!tabExist) {
+      // 2. 页面未打开 -> 更新 tabList
+      setTabList([].concat(tabList, { route: matchRoutes, location }));
+    } else {
+      // 3. 页面已打开 -> 更新 location
+      tabExist.location = location
+    }
     // 4.2 匹配 -> 更新 tabList, 更新 activeKey
-    setTabList([].concat(tabList, { route: matchRoutes, location }));
-    setActiveKey(matchRoutes.name);
+    setActiveKey(`${matchRoutes?.parentName.join('-')}-${matchRoutes.name}`);
   }, [routeList, tabList]);
 
   /**
@@ -78,7 +81,6 @@ export default function useTabRouteModel() {
       // 关闭的是当前激活页签
       const index = tabList.findIndex((v) => v.route.name === route.name);
       const newTab = index === 0 ? tabList[index + 1] : tabList[index - 1];
-      // onPathChange({ location: newTab.location });
       history.push(newTab.location.pathname)
     }
     setTabList(newTabList);
@@ -87,10 +89,12 @@ export default function useTabRouteModel() {
   return {
     routeList,
     setRouteList,
+    menuList,
+    setMenuList,
     tabList,
     setTabList,
     activeKey,
-    setActiveKey,
+    // setActiveKey,
     onPathChange,
     onMenuClose,
     onMenuClick,
