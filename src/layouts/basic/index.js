@@ -18,11 +18,10 @@ const BasicLayout = (props) => {
 
   // 监听路由变化
   useEffect(() => {
-    // TODO: 手动输入路由时需要初始化项目
     setTimeout(() => {
       console.log('=== onPathChange ===', 222);
       onPathChange({ location })
-    }, 10)
+    }, 100)
   }, [location.pathname]);
 
   return <SiderMenu {...props} />;
