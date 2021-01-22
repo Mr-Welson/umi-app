@@ -6,22 +6,22 @@ import { CloseOutlined } from '@ant-design/icons';
 const { TabPane } = Tabs;
 
 const RouteTab = (props) => {
-  const { activeKey, tabList, onRouteClose, onTabChange } = useModel(
+  const { activeKey, tabList, onMenuClose, onMenuClick } = useModel(
     'useTabRouteModel',
   );
 
   const onTabClose = (e, route) => {
     e.stopPropagation();
-    onRouteClose(route);
+    onMenuClose(route);
   };
 
   return (
     <Tabs hideAdd activeKey={activeKey} className="app-tab-list">
-      {tabList.map(({ route, location }) => (
+      {tabList.map(({ route }) => (
         <TabPane
           key={route.name}
           tab={
-            <div className="app-tab-item" onClick={() => onTabChange({ route, location })}>
+            <div className="app-tab-item" onClick={() => onMenuClick(route)}>
               <span>{route.title}</span>
               {tabList.length > 1 && (
                 <CloseOutlined onClick={(e) => onTabClose(e, route)} />

@@ -13,7 +13,6 @@ import zhCN from 'antd/lib/locale/zh_CN';
 * @param {*} oldRender 
 */
 export function render(oldRender) {
-  console.log('=====  render =====');
   oldRender()
 }
 
@@ -30,6 +29,8 @@ export function patchRoutes({ routes }) {
   if (process.env.NODE_ENV === 'product') {
     // 过滤本地路由
     pageRoutes = pageRoutes.filter(v => !v.isLocal)
+  } else {
+    console.log(pageRoutes);
   }
 }
 

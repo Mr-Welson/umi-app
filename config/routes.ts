@@ -75,7 +75,7 @@ export default [
             icon: 'VideoCameraOutlined',
           },
           {
-            path: '/post/frontEnd/Detail/:id',
+            path: '/post/frontEnd/Detail/:id?',
             name: 'frontEndDetail',
             component: '@/pages/post/frontEnd/detail',
             title: '前端详情页',
