@@ -3,7 +3,7 @@ import { matchPath } from 'react-router-dom';
 import { history } from 'umi';
 
 export default function useTabRouteModel() {
-  // 所有业务路由的集合
+  // 所有业务路由的集合(不包含重定向和404路由)
   const [routeList, setRouteList] = useState([]);
   // 页签集合
   const [tabList, setTabList] = useState([]);
@@ -21,18 +21,21 @@ export default function useTabRouteModel() {
   const getMatchRoute = (routeList, pathname) => {
     let matchRoutes = false;
     routeList.every(v => {
-      let match = null;
+      // 2. 再匹配子路由
       if (v.routes?.length) {
         match = getMatchRoute(v.routes, pathname);
-        match && (matchRoutes = match);
-      } else {
-        match = matchPath(pathname, {
-          path: v.path,
-          exact: v.exact,
-          strict: v.strict
-        });
-        match && (matchRoutes = v);
+        if (match) {
+          matchRoutes = match
+          return false
+        }
       }
+      // 1. 先匹配自身
+      let match = matchPath(pathname, {
+        path: v.path,
+        exact: v.exact,
+        strict: v.strict
+      });
+      match && (matchRoutes = v)
       return !match
     })
     return matchRoutes;
@@ -43,8 +46,7 @@ export default function useTabRouteModel() {
   const onPathChange = useCallback(({ location }) => {
     // 1. 根据 pathname 获取匹配路由信息
     const matchRoutes = getMatchRoute(routeList, location.pathname);
-    console.log(routeList);
-    console.log('matchRoutes==', matchRoutes);
+    console.log('== matchRoutes ==', matchRoutes);
     // 2. 未匹配 -> 404
     if (!matchRoutes) {
       return
@@ -60,7 +62,10 @@ export default function useTabRouteModel() {
       tabExist.location = location
     }
     // 4.2 匹配 -> 更新 tabList, 更新 activeKey
-    setActiveKey(`${matchRoutes?.parentName.join('-')}-${matchRoutes.name}`);
+    const activeKey = matchRoutes.parentName
+      ? `${matchRoutes.parentName.join('-')}-${matchRoutes.name}`
+      : matchRoutes.name
+    setActiveKey(activeKey);
   }, [routeList, tabList]);
 
   /**
@@ -76,13 +81,13 @@ export default function useTabRouteModel() {
    * 关闭单个菜单
    */
   const onMenuClose = useCallback(route => {
-    const newTabList = tabList.filter((v) => v.route.name !== route.name);
+    // 关闭的是当前激活页签
     if (route.name === activeKey) {
-      // 关闭的是当前激活页签
       const index = tabList.findIndex((v) => v.route.name === route.name);
       const newTab = index === 0 ? tabList[index + 1] : tabList[index - 1];
       history.push(newTab.location.pathname)
     }
+    const newTabList = tabList.filter((v) => v.route.name !== route.name);
     setTabList(newTabList);
   }, [tabList, activeKey]);
 

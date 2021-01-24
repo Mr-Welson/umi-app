@@ -4,15 +4,15 @@ import SiderMenu from './components/SiderMenu';
 import _ from 'lodash';
 
 import './index.less';
-// 处理隐藏菜单
+// 过滤隐藏菜单和重定向菜单
 const filterHiddenMenu = (menuList) => {
   let list = [];
   list = menuList.filter(v => {
     if (v.routes?.length) {
       v.routes = filterHiddenMenu(v.routes);
-      return v.routes.length
+      return !v.hideInMenu || v.routes.length
     } else {
-      return !v.hideInMenu && v.name
+      return !v.hideInMenu && v.title
     }
   })
   return list
@@ -23,7 +23,8 @@ const BasicLayout = (props) => {
   const { route, location } = props;
   const { routeList, setRouteList, setMenuList, onPathChange } = useModel('useTabRouteModel');
   // 业务路由的集合
-  const [pageRoutes] = useState(route.routes.filter((v) => v.path && v.name))
+  // const [pageRoutes] = useState(route.routes.filter((v) => v.path && v.name))
+  const [pageRoutes] = useState(route.routes)
 
   useEffect(() => {
     setRouteList(pageRoutes)

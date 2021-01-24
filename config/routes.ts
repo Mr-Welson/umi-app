@@ -33,6 +33,7 @@ export default [
     routes: [
       {
         path: '/',
+        exact: true,
         redirect: '/home',
       },
       {
@@ -58,6 +59,7 @@ export default [
         routes: [
           {
             path: '/post',
+            exact: true,
             redirect: '/post/frontEnd',
           },
           {
@@ -66,6 +68,18 @@ export default [
             component: '@/pages/post/frontEnd',
             title: '前端',
             icon: 'VideoCameraOutlined',
+            parentName: ['post'],
+            routes: [
+              {
+                path: '/post/frontEnd/test',
+                name: 'frontEndTest',
+                component: '@/pages/post/frontEnd/detail',
+                title: '三级路由',
+                icon: 'VideoCameraOutlined',
+                hideInMenu: false,
+                parentName: ['post', 'postFrontEnd']
+              }
+            ]
           },
           {
             path: '/post/backEnd',
@@ -73,16 +87,17 @@ export default [
             component: '@/pages/post/backEnd',
             title: '后端',
             icon: 'VideoCameraOutlined',
+            parentName: ['post']
           },
           {
-            path: '/post/frontEnd/Detail/:id?',
+            path: '/post/frontTest/Detail/:id?',
             name: 'frontEndDetail',
             component: '@/pages/post/frontEnd/detail',
             title: '前端详情页',
             icon: 'VideoCameraOutlined',
-            hideInMenu : true,
-            parentName: ['postFrontEnd']
-          },
+            hideInMenu: true,
+            parentName: ['post', 'postFrontEnd']
+          }
         ],
       },
       {
@@ -101,7 +116,11 @@ export default [
         component: '@/pages/test',
         icon: 'VideoCameraOutlined',
       },
-      { component: '@/pages/404', name: '404', },
+      {
+        name: '404',
+        hideInMenu: true,
+        component: '@/pages/404',
+      },
     ],
   },
 ];

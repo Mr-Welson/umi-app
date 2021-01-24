@@ -19,7 +19,11 @@ const RouteTab = () => {
     <Tabs hideAdd activeKey={activeKey} className="app-tab-list">
       {tabList.map(({ route }) => (
         <TabPane
-          key={`${route?.parentName.join('-')}-${route.name}`}
+          key={
+            route.parentName
+              ? `${route.parentName.join('-')}-${route.name}`
+              : route.name
+          }
           tab={
             <div className="app-tab-item" onClick={() => onMenuClick(route)}>
               <span>{route.title}</span>
