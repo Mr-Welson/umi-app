@@ -64,8 +64,8 @@ export default function useTabRouteModel() {
     
     console.log(matchRoutes.parentName);
     
-    const activeKey = matchRoutes.parentName
-      ? `${matchRoutes.parentName.join('-')}-${matchRoutes.name}`
+    const activeKey = matchRoutes.meta.parentName
+      ? `${matchRoutes.meta.parentName.join('-')}-${matchRoutes.name}`
       : matchRoutes.name
     setActiveKey(activeKey);
   }, [routeList, tabList]);

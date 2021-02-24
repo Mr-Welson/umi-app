@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from 'umi';
 
-const FrontEnd = () => {
+const FrontEnd = (props) => {
+  console.log('=== FrontEnd ===', props);
+
   return (
     <div> 前端
       <Link to="/post/frontEnd/Detail"> 详情1 </Link>

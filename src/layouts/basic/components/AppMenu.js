@@ -12,22 +12,23 @@ const AppMenu = (props) => {
 
   const renderMenu = useCallback((menuList) => {
     return menuList.map((menu) => {
-      let MenuIcon = Icon[menu.icon];
-      if (menu.routes && menu.routes.length) {
-        const subMenuList = menu.routes.filter((v) => !v.hideInMenu && v.title);
+      const { name, meta, routes } = menu;
+      let MenuIcon = Icon[meta.icon];
+      if (routes && routes.length) {
+        const subMenuList = routes.filter((v) => !v.meta.hideInMenu && v.meta.title);
         return (
-          <SubMenu key={menu.name} icon={<MenuIcon />} title={menu.title}>
+          <SubMenu key={name} icon={<MenuIcon />} title={meta.title}>
             {renderMenu(subMenuList)}
           </SubMenu>
         );
       } else {
         return (
           <MenuItem
-            key={menu.name}
+            key={name}
             icon={<MenuIcon />}
             onClick={() => onMenuClick(menu)}
           >
-            {menu.title}
+            {meta.title}
           </MenuItem>
         );
       }

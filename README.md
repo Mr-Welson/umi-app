@@ -2,6 +2,7 @@
 ## 路由
 constantRoutes
 asyncRoutes
+详情路由如何匹配菜单和页签，如： /detail/1 和 /detail/2
 
 
 # vue-element-admin 分析

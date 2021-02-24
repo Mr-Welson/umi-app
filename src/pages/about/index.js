@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'umi';
 
 const About = (props) => {
+  console.log('=== About ===', props);
   return (
     <div> 
       关于 

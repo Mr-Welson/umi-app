@@ -7,12 +7,14 @@ import zhCN from 'antd/lib/locale/zh_CN';
  * 按执行顺序书写
  */
 
+
 /**
 * render。
 * @desc 覆写 render, 比如用于渲染之前做权限校验，
 * @param {*} oldRender 
 */
 export function render(oldRender) {
+  // console.log('=====  render =====');
   oldRender()
 }
 
@@ -41,6 +43,7 @@ export function patchRoutes({ routes }) {
  * @param {Object} {history, plugin, routes}
  */
 export function rootContainer(container, { routes, history }) {
+  // console.log('=====  rootContainer =====');
   return React.createElement(ConfigProvider, { locale: zhCN }, container);
 }
 
@@ -60,5 +63,11 @@ export function rootContainer(container, { routes, history }) {
 //     const currentRoute = matchedRoutes[matchedRoutes.length - 1];
 //   }
 // }
+
+export async function getInitialState() {
+  console.log('=====  getInitialState =====');
+  // const data = await fetchXXX();
+  // return data;
+}
 
 

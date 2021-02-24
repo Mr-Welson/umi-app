@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from 'umi';
 
-const FrontEnd = () => {
+const FrontEnd = (props) => {
+  console.log('=== Detail ===', props);
   return (
     <div> 
       前端详情
