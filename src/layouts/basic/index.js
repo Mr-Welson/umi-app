@@ -23,8 +23,8 @@ const BasicLayout = (props) => {
   const { route, location } = props;
   const { routeList, setRouteList, setMenuList, onPathChange } = useModel('useTabRouteModel');
   // 业务路由的集合
-  // const [pageRoutes] = useState(route.routes.filter((v) => v.path && v.name))
-  const [pageRoutes] = useState(route.routes)
+  const [pageRoutes] = useState(route.routes.filter((v) => v.path && v.name))
+  // const [pageRoutes] = useState(route.routes)
 
   useEffect(() => {
     setRouteList(pageRoutes)

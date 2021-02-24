@@ -12,10 +12,8 @@ export default function useTabRouteModel() {
   // 当前激活菜单和页签的 name
   const [activeKey, setActiveKey] = useState('');
 
-
   // TODO: 缓存路由
   const setCache = () => { }
-
 
   // 路由匹配
   const getMatchRoute = (routeList, pathname) => {
@@ -40,6 +38,7 @@ export default function useTabRouteModel() {
     })
     return matchRoutes;
   }
+
   /**
    * pathname 监听
    */
@@ -62,6 +61,9 @@ export default function useTabRouteModel() {
       tabExist.location = location
     }
     // 4.2 匹配 -> 更新 tabList, 更新 activeKey
+    
+    console.log(matchRoutes.parentName);
+    
     const activeKey = matchRoutes.parentName
       ? `${matchRoutes.parentName.join('-')}-${matchRoutes.name}`
       : matchRoutes.name
