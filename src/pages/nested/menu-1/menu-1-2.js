@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from 'umi';
 
-const BackEnd = () => {
+const FrontEnd = () => {
   return (
-    <div> 后端
-      <Link to="/post/frontEnd"> 前端 </Link>
+    <div> 
+      <h2> menu-1-2 </h2>
       <Link to="/"> 首页 </Link>
     </div>
   )
 }
 
-export default BackEnd;
+export default FrontEnd;

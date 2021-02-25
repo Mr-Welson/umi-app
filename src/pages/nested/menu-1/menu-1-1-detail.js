@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from 'umi';
 
-const FrontEnd = () => {
+const FrontEnd = (props) => {
   return (
     <div> 
-      前端详情
-      <Link to="/post/frontEnd"> 返回前端 </Link>
+      menu-1-1-detail
+      <Link to="/nested/menu-1"> 返回 </Link>
       <Link to="/"> 首页 </Link>
     </div>
   )

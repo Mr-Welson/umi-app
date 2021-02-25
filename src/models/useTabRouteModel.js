@@ -62,7 +62,7 @@ export default function useTabRouteModel() {
     }
     // 4.2 匹配 -> 更新 tabList, 更新 activeKey
     
-    console.log(matchRoutes.parentName);
+    // console.log(matchRoutes.parentName);
     
     const activeKey = matchRoutes.parentName
       ? `${matchRoutes.parentName.join('-')}-${matchRoutes.name}`

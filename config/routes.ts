@@ -19,108 +19,141 @@
     parentName: 路由的父级路由,只在 hideInMenu 为true时生效
 
  */
-export default [
+
+export const constantRoutes = [
   {
     path: '/login',
     name: 'login',
     title: '登录',
     component: '@/pages/login',
     hideInMenu: true,
+  }
+]
+
+
+export const pageRoutes = [
+  {
+    path: '/',
+    exact: true,
+    redirect: '/home',
   },
+  {
+    path: '/home',
+    name: 'home',
+    component: '@/pages/home',
+    title: '首页',
+    icon: 'UserOutlined',
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: '@/pages/about',
+    title: '关于',
+    icon: 'VideoCameraOutlined',
+  },
+  {
+    path: '/nested',
+    name: 'nested',
+    component: '@/layouts/nested',
+    title: '嵌套',
+    icon: 'UploadOutlined',
+    routes: [
+      {
+        path: '/nested',
+        exact: true,
+        redirect: '/nested/menu-1/menu-1-1',
+      },
+      {
+        path: '/nested/menu-1',
+        name: 'menu-1',
+        title: 'menu-1',
+        icon: 'VideoCameraOutlined',
+        parentName: ['post'],
+        routes: [
+          {
+            path: '/nested/menu-1',
+            redirect: '/nested/menu-1/menu-1-1',
+            exact: true,
+          },
+          {
+            path: '/nested/menu-1/menu-1-1',
+            name: 'menu-1-1',
+            component: '@/pages/nested/menu-1/menu-1-1',
+            title: 'menu-1-1',
+            icon: 'VideoCameraOutlined',
+            hideInMenu: false,
+            parentName: ['nested', 'menu-1']
+          },
+          {
+            path: '/nested/menu-1/menu-1-2',
+            name: 'menu-1-2',
+            component: '@/pages/nested/menu-1/menu-1-2',
+            title: 'menu-1-2',
+            icon: 'VideoCameraOutlined',
+            hideInMenu: false,
+            parentName: ['nested', 'menu-1']
+          },
+          {
+            path: '/nested/menu-1/menu-1-1/:id',
+            name: 'menu-1-1-detail',
+            component: '@/pages/nested/menu-1/menu-1-1-detail',
+            title: 'menu-1-1 详情',
+            icon: 'VideoCameraOutlined',
+            hideInMenu: true,
+            parentName: ['nested', 'menu-1', 'menu-1-1']
+          }
+        ]
+      },
+      {
+        path: '/nested/menu-2',
+        name: 'menu-2',
+        component: '@/pages/nested/menu-2',
+        title: 'menu-2',
+        icon: 'VideoCameraOutlined',
+        parentName: ['nested']
+      },
+      {
+        path: '/nested/menu-2/:id',
+        name: 'menu-2-detail',
+        component: '@/pages/nested/menu-2/menu-2-detail',
+        title: 'menu 2 详情页',
+        icon: 'VideoCameraOutlined',
+        hideInMenu: true,
+        parentName: ['nested', 'menu-2']
+      }
+    ],
+  },
+  {
+    path: '/test',
+    name: 'test',
+    title: '本地路由',
+    isLocal: true,
+    component: '@/pages/test',
+    icon: 'VideoCameraOutlined',
+  },
+  {
+    path: '/hide',
+    name: 'hideRoute',
+    title: '隐藏路由',
+    hideInMenu: true,
+    component: '@/pages/test',
+    icon: 'VideoCameraOutlined',
+  },
+  {
+    name: '404',
+    hideInMenu: true,
+    component: '@/pages/404',
+  },
+]
+
+export const asyncRoutes = [
   {
     path: '/',
     component: '@/layouts/basic',
-    routes: [
-      {
-        path: '/',
-        exact: true,
-        redirect: '/home',
-      },
-      {
-        path: '/home',
-        name: 'home',
-        component: '@/pages/home',
-        title: '首页',
-        icon: 'UserOutlined',
-      },
-      {
-        path: '/about',
-        name: 'about',
-        component: '@/pages/about',
-        title: '关于',
-        icon: 'VideoCameraOutlined',
-      },
-      {
-        path: '/post',
-        name: 'post',
-        component: '@/layouts/post',
-        title: '文章',
-        icon: 'UploadOutlined',
-        routes: [
-          {
-            path: '/post',
-            exact: true,
-            redirect: '/post/frontEnd',
-          },
-          {
-            path: '/post/frontEnd',
-            name: 'postFrontEnd',
-            component: '@/pages/post/frontEnd',
-            title: '前端',
-            icon: 'VideoCameraOutlined',
-            parentName: ['post'],
-            routes: [
-              {
-                path: '/post/frontEnd/test',
-                name: 'frontEndTest',
-                component: '@/pages/post/frontEnd/detail',
-                title: '三级路由',
-                icon: 'VideoCameraOutlined',
-                hideInMenu: false,
-                parentName: ['post', 'postFrontEnd']
-              }
-            ]
-          },
-          {
-            path: '/post/backEnd',
-            name: 'postBackEnd',
-            component: '@/pages/post/backEnd',
-            title: '后端',
-            icon: 'VideoCameraOutlined',
-            parentName: ['post']
-          },
-          {
-            path: '/post/frontTest/Detail/:id?',
-            name: 'frontEndDetail',
-            component: '@/pages/post/frontEnd/detail',
-            title: '前端详情页',
-            icon: 'VideoCameraOutlined',
-            hideInMenu: true,
-            parentName: ['post', 'postFrontEnd']
-          }
-        ],
-      },
-      {
-        path: '/test',
-        name: 'test',
-        title: '测试',
-        isLocal: true,
-        component: '@/pages/test',
-        icon: 'VideoCameraOutlined',
-      },
-      {
-        path: '/hide',
-        name: 'hideRoute',
-        title: '隐藏路由',
-        hideInMenu: true,
-        component: '@/pages/test',
-        icon: 'VideoCameraOutlined',
-      },
-      {
-        name: '404',
-        hideInMenu: true,
-        component: '@/pages/404',
-      },
-    ],
+    routes: pageRoutes,
   },
+]
+export default [
+  ...constantRoutes,
+  ...asyncRoutes,
 ];

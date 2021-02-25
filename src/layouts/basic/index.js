@@ -1,44 +1,75 @@
 import React, { useEffect, useState } from 'react';
-import { useModel } from 'umi';
-import SiderMenu from './components/SiderMenu';
-import _ from 'lodash';
-
 import './index.less';
-// 过滤隐藏菜单和重定向菜单
-const filterHiddenMenu = (menuList) => {
-  let list = [];
-  list = menuList.filter(v => {
-    if (v.routes?.length) {
-      v.routes = filterHiddenMenu(v.routes);
-      return !v.hideInMenu || v.routes.length
-    } else {
-      return !v.hideInMenu && v.title
-    }
-  })
-  return list
-}
+import _ from 'lodash';
+import { useModel } from 'umi';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { Layout } from 'antd';
+import AppMenu from './components/AppMenu';
+import RouteTab from './components/RouteTab';
+
+const { Header, Sider, Content } = Layout;
 
 const BasicLayout = (props) => {
   console.log('=== BasicLayout ===', props);
+  const [collapsed, setCollapsed] = useState(false);
+
   const { route, location } = props;
-  const { routeList, setRouteList, setMenuList, onPathChange } = useModel('useTabRouteModel');
+  const { generateMenuList, initRoutes, getMatchRoute, setActiveKey } = useModel('permission');
+  useEffect(() => {
+    initRoutes()
+    generateMenuList()
+  },[])
+
+
+  const { routeList, setRouteList, onPathChange } = useModel('useTabRouteModel');
   // 业务路由的集合
   const [pageRoutes] = useState(route.routes.filter((v) => v.path && v.name))
-  // const [pageRoutes] = useState(route.routes)
-
+  
   useEffect(() => {
     setRouteList(pageRoutes)
-    const menuList = filterHiddenMenu(_.cloneDeep(pageRoutes));
-    setMenuList(menuList);
   }, [pageRoutes])
+
+
+  useEffect(() => {
+    console.log('location==', location);
+    const matchRoutes = getMatchRoute(location.pathname)
+    console.log('matchRoutes==', matchRoutes);
+    setActiveKey(matchRoutes?.reverse()[0].name)
+  }, [location.pathname])
 
   // 监听路由变化
   useEffect(() => {
+    
     // fix: 添加 routeList 解决首次渲染 routeList 获取不到的bug
     routeList.length && onPathChange({ location })
   }, [location.pathname, routeList.length]);
 
-  return <SiderMenu {...props} />;
+  return (
+
+    <Layout className="app-layout sider-layout">
+      <Sider
+        className="app-sider"
+        width={240}
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
+        <div className="logo" />
+        <AppMenu {...props} />
+      </Sider>
+      <Layout className="app-layout">
+        <Header className="app-header">
+          <span className="trigger" onClick={() => setCollapsed(!collapsed)}>
+            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          </span>
+        </Header>
+        <RouteTab {...props} />
+        <Content className="app-content">
+          {props.children}
+        </Content>
+      </Layout>
+    </Layout>
+  );
 };
 
 export default BasicLayout;

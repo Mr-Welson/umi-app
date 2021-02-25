@@ -26,9 +26,10 @@ export default defineConfig({
   base: '/', // 部署路径
   publicPath: '/static/', // 静态资源访问目录
   hash: true, // build 文件 hash 后缀
-  // history: {
-  //   type: 'browser', // 路由模式，browser默认、hash、memory
-  // },
+  history: {
+    // type: 'browser', // 路由模式，browser默认、hash、memory
+    type: 'hash', // 路由模式，browser默认、hash、memory
+  },
   // metas: [], 配置额外的 meta 标签
   // proxy: {
   //   '/mock': {
