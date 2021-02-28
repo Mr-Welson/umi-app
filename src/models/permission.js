@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { matchPath } from 'react-router-dom';
-import { flattenRoutes } from '@/utils/array';
+import { flattenRoutes } from '../utils/array';
 import allRoutes, { pageRoutes } from '../../config/routes'
 
 export default function permissionModel() {
@@ -26,8 +26,9 @@ export default function permissionModel() {
 
   // 初始化路由数据
   function initRoutes() {
-    let flatRoutes = flattenRoutes(allRoutes)
-    flatRoutes = flatRoutes.filter(v => !v.redirect)
+    let flatRoutes = flattenRoutes(_.cloneDeep(allRoutes));
+    flatRoutes = flatRoutes.filter(v => v.name && v.path)
+    // flatRoutes = flatRoutes.filter(v => !v.redirect)
     setFlatRoutes(flatRoutes)
   }
 

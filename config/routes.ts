@@ -79,7 +79,6 @@ export const pageRoutes = [
             component: '@/pages/nested/menu-1/menu-1-1',
             title: 'menu-1-1',
             icon: 'VideoCameraOutlined',
-            hideInMenu: false,
           },
           {
             path: '/nested/menu-1/menu-1-2',
@@ -87,7 +86,6 @@ export const pageRoutes = [
             component: '@/pages/nested/menu-1/menu-1-2',
             title: 'menu-1-2',
             icon: 'VideoCameraOutlined',
-            hideInMenu: false,
           },
           {
             path: '/nested/menu-1/menu-1-1/:id',
@@ -133,9 +131,18 @@ export const pageRoutes = [
     icon: 'VideoCameraOutlined',
   },
   {
+    // name: '404',
+    // component: '@/pages/404',
+    hideInMenu: true,
+    redirect: '/404',
+  },
+  {
+    path: '/404',
     name: '404',
+    title: '404',
     hideInMenu: true,
     component: '@/pages/404',
+    icon: 'VideoCameraOutlined',
   },
 ]
 

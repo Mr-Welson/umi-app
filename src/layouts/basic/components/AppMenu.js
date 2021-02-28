@@ -6,22 +6,23 @@ import * as Icon from '@ant-design/icons';
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 
-const AppMenu = () => {
-  const [activeKey, setActiveKey] = useState('');
+const AppMenu = ({theme}) => {
+  const [activeKeys, setActiveKeys] = useState([]);
   const { menuList, matchRoutes } = useModel('permission');
 
   useEffect(() => {
     if (matchRoutes.length) {
-      const currRoute = matchRoutes[matchRoutes.length - 1];
-      setActiveKey(currRoute.name)
+      // console.log('matchRoutes==', matchRoutes);
+      const activeKeys = matchRoutes.map(v => v.name)
+      setActiveKeys(activeKeys)
     }
   }, [matchRoutes])
 
   const onMenuClick = useCallback((menu) => {
-    if (activeKey !== menu.name) {
+    if (!activeKeys.includes(menu.name)) {
       history.push(menu.path)
     }
-  }, [activeKey])
+  }, [activeKeys])
 
   const renderMenu = (menuList) => {
     return menuList.map((menu) => {
@@ -50,10 +51,10 @@ const AppMenu = () => {
   return (
     <Menu
       className="app-menu"
-      theme="dark"
       mode="inline"
-      // openKeys={activeKey.split('-')}
-      selectedKeys={[activeKey]}
+      theme={theme}
+      defaultOpenKeys={activeKeys}
+      selectedKeys={activeKeys}
     >
       {renderMenu(menuList)}
     </Menu>

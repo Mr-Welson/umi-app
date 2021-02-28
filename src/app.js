@@ -1,6 +1,7 @@
 import React from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
+import 'antd/dist/antd.css'
 
 /**
  * 运行时配置文件
