@@ -1,34 +1,44 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useModel } from 'umi';
 import { Tabs } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
-const RouteTab = () => {
-  const { activeKey, tabList, onMenuClose, onMenuClick } = useModel(
-    'useTabRouteModel',
-  );
+const RouteTab = (props) => {
+  const { location } = props;
+  const { matchRoutes } = useModel('permission');
+  const { tabList, activeTab, setActiveTab, onTabClick, addTab, closeTab } = useModel('tabsNav');
 
-  const onTabClose = (e, route) => {
+  useEffect(() => {
+    if (matchRoutes.length) {
+      const { icon, name, title } = matchRoutes[matchRoutes.length - 1];
+      const tabItem = {
+        icon, name,
+        title: location?.state?.pageTitle || title,
+        pathname: location.pathname,
+        location
+      }
+      addTab(tabItem)
+      setActiveTab(tabItem)
+    }
+  }, [matchRoutes])
+
+  const onTabClose = useCallback((e, tabItem) => {
     e.stopPropagation();
-    onMenuClose(route);
-  };
+    closeTab(tabItem);
+  }, [tabList, activeTab.pathname]);
 
   return (
-    <Tabs hideAdd activeKey={activeKey} className="app-tab-list">
-      {tabList.map(({ route }) => (
+    <Tabs hideAdd activeKey={activeTab.pathname} className="app-tab-list">
+      {tabList.map((v) => (
         <TabPane
-          key={
-            route.parentName
-              ? `${route.parentName.join('-')}-${route.name}`
-              : route.name
-          }
+          key={v.pathname}
           tab={
-            <div className="app-tab-item" onClick={() => onMenuClick(route)}>
-              <span>{route.title}</span>
+            <div className="app-tab-item" onClick={() => onTabClick(v)}>
+              <span>{v.title}</span>
               {tabList.length > 1 && (
-                <CloseOutlined onClick={(e) => onTabClose(e, route)} />
+                <CloseOutlined onClick={(e) => onTabClose(e, v)} />
               )}
             </div>
           }

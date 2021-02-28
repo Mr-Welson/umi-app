@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from 'umi';
 
-const FrontEnd = (props) => {
+const NestedDetail = (props) => {
+  const { match } = props
   return (
-    <div> 
-      menu-1-1-detail
+    <div>
+      <h3> menu-1-1-detail-{match.params.id}</h3>
       <Link to="/nested/menu-1"> 返回 </Link>
       <Link to="/"> 首页 </Link>
     </div>
   )
 }
 
-export default FrontEnd;
+export default NestedDetail;

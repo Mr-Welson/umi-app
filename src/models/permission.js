@@ -1,26 +1,18 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { matchPath } from 'react-router-dom';
 import { flattenRoutes } from '@/utils/array';
 import allRoutes, { pageRoutes } from '../../config/routes'
-import { history } from 'umi';
-
-// routeList
-
-// menuList
-
-// tabList
-
 
 export default function permissionModel() {
-  // 扁平化理由
-  const [flatRoutes, setFlatRoutes] = useState(flattenRoutes(allRoutes));
+  // 扁平化路由
+  const [flatRoutes, setFlatRoutes] = useState([]);
   // 菜单
-  const [menuList, setMenuList] = useState([])
-  // 当前菜单
-  const [activeKey, setActiveKey] = useState('home');
+  const [menuList, setMenuList] = useState([]);
+  // 当前匹配的路由
+  const [matchRoutes, setMatchRoutes] = useState([])
 
   // 根据 pathname 匹配路由
-  const getMatchRoute = (pathname) => {
+  function onPathNameChange(pathname, flatRoutes) {
     const matchRoutes = flatRoutes.filter(v => {
       const matchInfo = matchPath(pathname, {
         path: v.path,
@@ -29,7 +21,7 @@ export default function permissionModel() {
       });
       return matchInfo
     })
-    return matchRoutes;
+    setMatchRoutes(matchRoutes)
   }
 
   // 初始化路由数据
@@ -64,25 +56,15 @@ export default function permissionModel() {
     const layoutRoutes = pageRoutes;
     const authRoutes = filterNoAuthRoute(layoutRoutes);
     const menuList = filterHiddenRoute(authRoutes);
-    console.log(menuList);
     setMenuList(menuList)
   }
 
-  // 菜单点击事件
-  const onMenuClick = useCallback((menu) => {
-    if (activeKey !== menu.name) {
-      history.push(menu.path)
-    }
-  }, [activeKey])
-
-
   return {
+    flatRoutes,
     menuList,
-    activeKey,
-    setActiveKey,
+    matchRoutes,
     generateMenuList,
     initRoutes,
-    onMenuClick,
-    getMatchRoute,
+    onPathNameChange,
   }
 } 

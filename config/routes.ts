@@ -16,7 +16,6 @@
     name: 路由的唯一标识符
     isLocal: 是否只在开发环境显示，如：Test 路由或临时路由
     hideInMenu: 是否显示在菜单，如详情页路由不需要显示在菜单
-    parentName: 路由的父级路由,只在 hideInMenu 为true时生效
 
  */
 
@@ -68,7 +67,6 @@ export const pageRoutes = [
         name: 'menu-1',
         title: 'menu-1',
         icon: 'VideoCameraOutlined',
-        parentName: ['post'],
         routes: [
           {
             path: '/nested/menu-1',
@@ -82,7 +80,6 @@ export const pageRoutes = [
             title: 'menu-1-1',
             icon: 'VideoCameraOutlined',
             hideInMenu: false,
-            parentName: ['nested', 'menu-1']
           },
           {
             path: '/nested/menu-1/menu-1-2',
@@ -91,7 +88,6 @@ export const pageRoutes = [
             title: 'menu-1-2',
             icon: 'VideoCameraOutlined',
             hideInMenu: false,
-            parentName: ['nested', 'menu-1']
           },
           {
             path: '/nested/menu-1/menu-1-1/:id',
@@ -100,7 +96,6 @@ export const pageRoutes = [
             title: 'menu-1-1 详情',
             icon: 'VideoCameraOutlined',
             hideInMenu: true,
-            parentName: ['nested', 'menu-1', 'menu-1-1']
           }
         ]
       },
@@ -110,7 +105,6 @@ export const pageRoutes = [
         component: '@/pages/nested/menu-2',
         title: 'menu-2',
         icon: 'VideoCameraOutlined',
-        parentName: ['nested']
       },
       {
         path: '/nested/menu-2/:id',
@@ -119,7 +113,6 @@ export const pageRoutes = [
         title: 'menu 2 详情页',
         icon: 'VideoCameraOutlined',
         hideInMenu: true,
-        parentName: ['nested', 'menu-2']
       }
     ],
   },

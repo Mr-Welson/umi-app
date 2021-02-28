@@ -1,4 +1,15 @@
+# 设计说明
+
+## 注意事项
+
+### model
+
+1. 在 model 中的 function 慎用 useCallback，因 function 可能在 view 中调用，如果在 view 中使用 了该useCallback 并添加对应依赖项，然后在其执行体中执行该 function，则有可能产数据依赖不更新的 bug 
+
+
+
 # umi
+
 ## 路由
 constantRoutes
 asyncRoutes
@@ -38,7 +49,7 @@ asyncRoutes
   ```
 2. permission.routes
 3. 跳转
-  router-link 组件
+    router-link 组件
 
 
 # iview-admin 分析
@@ -114,13 +125,13 @@ asyncRoutes
 ## 页签
 数据来源: this.$store.state.app.tagNavList
 1. 激活状态 $route
-  路由信息：name, params, query
-  currentRouteObj = {
+    路由信息：name, params, query
+    currentRouteObj = {
     name, params, query
-  }
+    }
 
 2. 点击跳转 
 同菜单点击
-  
+
 
 

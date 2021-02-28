@@ -11,38 +11,18 @@ const { Header, Sider, Content } = Layout;
 
 const BasicLayout = (props) => {
   console.log('=== BasicLayout ===', props);
+  const { location } = props;
   const [collapsed, setCollapsed] = useState(false);
 
-  const { route, location } = props;
-  const { generateMenuList, initRoutes, getMatchRoute, setActiveKey } = useModel('permission');
+  const { flatRoutes, generateMenuList, initRoutes, onPathNameChange } = useModel('permission');
   useEffect(() => {
     initRoutes()
     generateMenuList()
-  },[])
-
-
-  const { routeList, setRouteList, onPathChange } = useModel('useTabRouteModel');
-  // 业务路由的集合
-  const [pageRoutes] = useState(route.routes.filter((v) => v.path && v.name))
-  
-  useEffect(() => {
-    setRouteList(pageRoutes)
-  }, [pageRoutes])
-
+  }, [])
 
   useEffect(() => {
-    console.log('location==', location);
-    const matchRoutes = getMatchRoute(location.pathname)
-    console.log('matchRoutes==', matchRoutes);
-    setActiveKey(matchRoutes?.reverse()[0].name)
-  }, [location.pathname])
-
-  // 监听路由变化
-  useEffect(() => {
-    
-    // fix: 添加 routeList 解决首次渲染 routeList 获取不到的bug
-    routeList.length && onPathChange({ location })
-  }, [location.pathname, routeList.length]);
+    onPathNameChange(location.pathname, flatRoutes)
+  }, [location.pathname, flatRoutes])
 
   return (
 
