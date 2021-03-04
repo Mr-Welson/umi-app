@@ -15,7 +15,7 @@ export default function tabsNavModel() {
       pathname: '/home',
       query: {},
       search: '',
-      state: undefined,
+      state: {pageTitle: ''},
       hash: ''
     }
   }
@@ -42,13 +42,13 @@ export default function tabsNavModel() {
       // 更新
       return updateTabItem(tabItem, index)
     }
-  };
+  }
   // 更新 Tab
   function updateTabItem(tabItem, index) {
     index = index || tabList.findIndex(v => v.pathname === tabItem.pathname);
     tabList.splice(index, 1, tabItem)
     setTabList(tabList);
-  };
+  }
   // 关闭当前
   function closeTab(tabItem) {
     if (tabItem.pathname === activeTab.pathname) {

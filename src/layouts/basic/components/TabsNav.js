@@ -1,15 +1,20 @@
 import React, { useCallback, useEffect } from 'react';
-import { useModel } from 'umi';
+import { useModel, useLocation } from 'umi';
 import { Tabs } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
-const RouteTab = (props) => {
-  const { location } = props;
+const TabsNav = () => {
+  const location = useLocation()
   const { matchRoutes } = useModel('permission');
   const { tabList, activeTab, setActiveTab, onTabClick, addTab, closeTab } = useModel('tabsNav');
 
+  // useEffect(() => {
+  // initTabList()
+  // }, [])
+
+  // 监听地址栏变化
   useEffect(() => {
     if (matchRoutes.length) {
       const { icon, name, title } = matchRoutes[matchRoutes.length - 1];
@@ -48,4 +53,4 @@ const RouteTab = (props) => {
   );
 };
 
-export default RouteTab;
+export default TabsNav;
