@@ -8,25 +8,26 @@ const { TabPane } = Tabs;
 const TabsNav = () => {
   const location = useLocation()
   const { matchRoutes } = useModel('permission');
-  const { tabList, activeTab, setActiveTab, onTabClick, addTab, closeTab } = useModel('tabsNav');
+  const { tabList, activeTab, initTabList, setActiveTab, onTabClick, addTab, closeTab } = useModel('tabsNav');
 
-  // useEffect(() => {
-  // initTabList()
-  // }, [])
+  useEffect(() => {
+    initTabList()
+  }, [])
 
   // 监听地址栏变化
   useEffect(() => {
-    if (matchRoutes.length) {
-      const { icon, name, title } = matchRoutes[matchRoutes.length - 1];
-      const tabItem = {
-        icon, name,
-        title: location?.state?.pageTitle || title,
-        pathname: location.pathname,
-        location
-      }
-      addTab(tabItem)
-      setActiveTab(tabItem)
+    if (!matchRoutes.length) {
+      return
     }
+    const { icon, name, title } = matchRoutes[matchRoutes.length - 1];
+    const tabItem = {
+      icon, name,
+      title: location?.state?.pageTitle || title,
+      pathname: location.pathname,
+      location
+    }
+    addTab(tabItem)
+    setActiveTab(tabItem)
   }, [matchRoutes])
 
   const onTabClose = useCallback((e, tabItem) => {
@@ -35,7 +36,7 @@ const TabsNav = () => {
   }, [tabList, activeTab.pathname]);
 
   return (
-    <Tabs hideAdd activeKey={activeTab.pathname} className="app-tab-list">
+    <Tabs activeKey={activeTab.pathname} className="app-tab-list">
       {tabList.map((v) => (
         <TabPane
           key={v.pathname}

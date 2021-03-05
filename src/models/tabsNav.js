@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { history } from 'umi';
+import { getCache, setCache } from '../utils/cache'
 import _ from 'lodash';
 
 export default function tabsNavModel() {
@@ -22,20 +23,43 @@ export default function tabsNavModel() {
  */
   const [tabList, setTabList] = useState([]);
   const [activeTab, setActiveTab] = useState({});
+
+  // 页签初始化
+  function initTabList() {
+    const list = getCacheTabList();
+    setTabList(list)
+  }
+
+  // 同时更新本地缓存和页面数据
+  function updateTabList(list) {
+    setTabList(list)
+    setCacheTabList(list)
+  }
+
+  // 获取导航缓存
+  function getCacheTabList() {
+    return getCache('zf_tab_list') || []
+  }
+
+  // 设置导航缓存
+  function setCacheTabList(list) {
+    setCache('zf_tab_list', list || [])
+  }
+
   // 点击 Tab
   function onTabClick(tabItem) {
     if (activeTab.pathname !== tabItem.pathname) {
-      // console.log(location.pathname);
       setActiveTab(tabItem)
       history.push(tabItem.location)
     }
   }
+
   // 新增 Tab 
   function addTab(tabItem) {
     const index = tabList.findIndex(v => v.pathname === tabItem.pathname);
     if (index === -1) {
       // 新增
-      return setTabList([...tabList, tabItem])
+      return updateTabList([...tabList, tabItem])
     }
     const item = tabList[index];
     if (!_.isEqual(item, tabItem)) {
@@ -43,12 +67,14 @@ export default function tabsNavModel() {
       return updateTabItem(tabItem, index)
     }
   }
+
   // 更新 Tab
   function updateTabItem(tabItem, index) {
     index = index || tabList.findIndex(v => v.pathname === tabItem.pathname);
     tabList.splice(index, 1, tabItem)
-    setTabList(tabList);
+    updateTabList(tabList);
   }
+
   // 关闭当前
   function closeTab(tabItem) {
     if (tabItem.pathname === activeTab.pathname) {
@@ -57,12 +83,14 @@ export default function tabsNavModel() {
       history.push(newTab.location.pathname)
     }
     const newTabList = tabList.filter((v) => v.pathname !== tabItem.pathname);
-    setTabList(newTabList);
+    updateTabList(newTabList);
   }
+
   // 关闭其他
   function closeOther() {
 
   }
+
   // 关闭所有
   function closeAll() {
 
@@ -73,6 +101,7 @@ export default function tabsNavModel() {
     addTab,
     activeTab,
     setActiveTab,
+    initTabList,
     onTabClick,
     closeTab,
   }
