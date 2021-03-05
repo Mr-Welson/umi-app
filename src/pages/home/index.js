@@ -4,7 +4,7 @@ import { Button, DatePicker } from 'antd';
 
 const Home = () => {
   return (
-    <div>
+    <div className='home-container'>
       首页
       <Button>
         <Link to="/about"> 关于 </Link>

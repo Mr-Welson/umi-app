@@ -29,7 +29,6 @@ export const constantRoutes = [
   }
 ]
 
-
 export const pageRoutes = [
   {
     path: '/',
@@ -136,14 +135,14 @@ export const pageRoutes = [
     hideInMenu: true,
     redirect: '/404',
   },
-  {
-    path: '/404',
-    name: '404',
-    title: '404',
-    hideInMenu: true,
-    component: '@/pages/404',
-    icon: 'VideoCameraOutlined',
-  },
+  // {
+  //   path: '/404',
+  //   name: '404',
+  //   title: '404',
+  //   hideInMenu: true,
+  //   component: '@/pages/404',
+  //   icon: 'VideoCameraOutlined',
+  // },
 ]
 
 export const asyncRoutes = [

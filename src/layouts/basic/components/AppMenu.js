@@ -12,10 +12,11 @@ const AppMenu = ({ theme }) => {
 
   // 监听地址栏变化
   useEffect(() => {
-    if (matchRoutes.length) {
-      const activeKeys = matchRoutes.map(v => v.name)
-      setActiveKeys(activeKeys)
+    if (!matchRoutes.length) {
+      return
     }
+    const activeKeys = matchRoutes.map(v => v.name)
+    setActiveKeys(activeKeys)
   }, [matchRoutes])
 
   const onMenuClick = useCallback((menu) => {

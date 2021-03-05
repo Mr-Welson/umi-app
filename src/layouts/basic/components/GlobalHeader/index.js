@@ -6,10 +6,10 @@ import style from './index.less';
 import ThemeMenu from './ThemeMenu'
 import AvatarDropdown from './AvatarDropdown';
 
-const AppHeader = ({ collapsed, dispatch }) => {
+const GlobalHeader = ({ collapsed, dispatch }) => {
   const setCollapsed = (collapsed) => {
     return dispatch({
-      type: 'settings/asyncTest2',
+      type: 'settings/setCollapsed',
       payload: { collapsed },
     })
   }
@@ -32,8 +32,7 @@ const AppHeader = ({ collapsed, dispatch }) => {
   )
 }
 
-const mapStateToProps = ({ settings, loading }) => ({
+const mapStateToProps = ({ settings }) => ({
   collapsed: settings.collapsed,
-  loading: loading.models.settings,
 })
-export default connect(mapStateToProps)(AppHeader);
+export default connect(mapStateToProps)(GlobalHeader);

@@ -48,9 +48,8 @@ const BasicLayout = ({ theme, collapsed, location, ...rest }) => {
   );
 };
 
-const mapStateToProps = ({ settings,loading }) => ({
+const mapStateToProps = ({ settings }) => ({
   theme: settings.theme,
   collapsed: settings.collapsed,
-  loading: loading.models.settings,
 })
 export default connect(mapStateToProps)(BasicLayout);
