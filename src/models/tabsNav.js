@@ -3,14 +3,28 @@ import { history } from 'umi';
 import { getCache, setCache } from '../utils/cache'
 import _ from 'lodash';
 
+const indexRoute = {
+  icon: 'UserOutlined',
+  key: 'home',
+  name: '首页',
+  pathname: '/home',
+  location: {
+    pathname: '/home',
+    query: {},
+    search: '',
+    state: undefined,
+    hash: ''
+  }
+}
+
 export default function tabsNavModel() {
 
   /**
   通过 pathname 匹配对应路由, 找到路由信息, 合成 tabItem
   tabItem: {
     icon: 'icon'
-    name: 'home',
-    title: '首页',
+    key: 'home',
+    name: '首页',
     pathname: '/home',
     location: {
       pathname: '/home',
@@ -27,6 +41,7 @@ export default function tabsNavModel() {
   // 页签初始化
   function initTabList() {
     const list = getCacheTabList();
+    !list.length && list.unshift({ ...indexRoute })
     setTabList(list)
   }
 
@@ -75,7 +90,7 @@ export default function tabsNavModel() {
     updateTabList(tabList);
   }
 
-  // 关闭当前
+  // 关闭当前 往前推一个
   function closeTab(tabItem) {
     if (tabItem.pathname === activeTab.pathname) {
       const index = tabList.findIndex((v) => v.pathname === tabItem.pathname);
@@ -87,13 +102,18 @@ export default function tabsNavModel() {
   }
 
   // 关闭其他
-  function closeOther() {
-
+  function closeOther(tabItem) {
+    const newTabList = [tabItem];
+    if (tabItem.pathname !== activeTab.pathname) {
+      history.push(tabItem.location.pathname)
+    }
+    updateTabList(newTabList);
   }
 
   // 关闭所有
   function closeAll() {
-
+    updateTabList([indexRoute]);
+    history.push('/home')
   }
 
   return {
@@ -103,6 +123,9 @@ export default function tabsNavModel() {
     setActiveTab,
     initTabList,
     onTabClick,
+    updateTabItem,
     closeTab,
+    closeOther,
+    closeAll
   }
 }

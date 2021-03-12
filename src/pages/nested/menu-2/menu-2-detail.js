@@ -4,7 +4,8 @@ import { Link } from 'umi';
 const FrontEnd = () => {
   return (
     <div> 
-      menu-2-detail
+      <h3> menu-2 详情 </h3> 
+      <br />
       <Link to="/nested/menu-2"> 返回 </Link>
       <Link to="/"> 首页 </Link>
     </div>

@@ -1,13 +1,20 @@
 import React from 'react';
+import { Result, Button } from 'antd';
 import { Link } from 'umi';
 
-export default () => {
+const Page404 = () => {
   return (
-    <div>
-      <h1>
-        Page 404
-      </h1>
-      <Link to="/home"> 返回首页 </Link>
-    </div>
+    <Result
+      status="404"
+      title="404"
+      subTitle="抱歉，你访问的页面不存在"
+      extra={
+        <Link to="/home" replace>
+          <Button type="primary">返回首页</Button>
+        </Link>
+      }
+    />
   );
 }
+
+export default Page404

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import './index.less';
-import _ from 'lodash';
 import { useModel } from 'umi';
 import { connect } from 'dva';
 import { Layout } from 'antd';
@@ -11,9 +10,11 @@ import TabsNav from './components/TabsNav';
 const { Sider, Content } = Layout;
 
 const BasicLayout = ({ theme, collapsed, location, ...rest }) => {
-  console.log('=== BasicLayout ===', rest);
+  // console.log('=== BasicLayout ===', rest);
 
+  // const { initialState } = useModel('@@initialState');
   const { flatRoutes, generateMenuList, initRoutes, onPathNameChange } = useModel('permission');
+  
   useEffect(() => {
     initRoutes()
     generateMenuList()

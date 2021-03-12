@@ -2,11 +2,19 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import 'antd/dist/antd.css'
+import { getCache } from './utils/cache'
 
 /**
  * 运行时配置文件
  * 按执行顺序书写
  */
+
+
+export function getInitialState() {
+  console.log('=====  getInitialState =====');
+  const tabList = getCache('zf_tab_list');
+  return Promise.resolve({ tabList });
+}
 
 /**
 * render。

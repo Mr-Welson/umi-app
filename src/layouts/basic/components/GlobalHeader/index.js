@@ -3,6 +3,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
 import { connect } from 'dva';
 import style from './index.less';
+import BreadcrumbsView from './BreadcrumbsView';
 import ThemeMenu from './ThemeMenu'
 import AvatarDropdown from './AvatarDropdown';
 
@@ -19,6 +20,7 @@ const GlobalHeader = ({ collapsed, dispatch }) => {
         <span className={style["trigger"]} onClick={() => setCollapsed(!collapsed)}>
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </span>
+        <BreadcrumbsView></BreadcrumbsView>
       </div>
       <div className={style['right-content']}>
         <div className={style['header-action']}>

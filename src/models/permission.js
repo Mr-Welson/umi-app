@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { matchPath } from 'react-router-dom';
+import _ from 'lodash';
 import { flattenRoutes } from '../utils/array';
 import allRoutes, { pageRoutes } from '../../config/routes'
 
@@ -21,14 +22,18 @@ export default function permissionModel() {
       });
       return matchInfo
     })
+    // console.log('== matchRoutes ==', matchRoutes);
+    if (matchRoutes[matchRoutes.length - 1]?.needRedirect) {
+      // 当匹配到的路由为重定向路由时，直接跳过
+      return
+    }
     setMatchRoutes(matchRoutes)
   }
 
   // 初始化路由数据
   function initRoutes() {
     let flatRoutes = flattenRoutes(_.cloneDeep(allRoutes));
-    flatRoutes = flatRoutes.filter(v => v.name && v.path)
-    // flatRoutes = flatRoutes.filter(v => !v.redirect)
+    flatRoutes = flatRoutes.filter(v => v.key && v.path);
     setFlatRoutes(flatRoutes)
   }
 
@@ -40,7 +45,7 @@ export default function permissionModel() {
         v.routes = filterHiddenRoute(v.routes);
         return !v.hideInMenu || v.routes.length
       } else {
-        return !v.hideInMenu && v.name
+        return !v.hideInMenu && v.key
       }
     })
     return list

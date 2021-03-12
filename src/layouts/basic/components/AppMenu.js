@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useModel, history } from 'umi';
+import React, { useState, useEffect } from 'react';
+import { Link, useModel } from 'umi';
 import { Menu } from 'antd';
-import * as Icon from '@ant-design/icons';
+import * as AntIcon from '@ant-design/icons';
 
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
@@ -15,35 +15,28 @@ const AppMenu = ({ theme }) => {
     if (!matchRoutes.length) {
       return
     }
-    const activeKeys = matchRoutes.map(v => v.name)
+    const activeKeys = matchRoutes.map(v => v.activeMenuKey || v.key)
     setActiveKeys(activeKeys)
   }, [matchRoutes])
 
-  const onMenuClick = useCallback((menu) => {
-    if (!activeKeys.includes(menu.name)) {
-      history.push(menu.path)
-    }
-  }, [activeKeys])
-
   const renderSubMenu = (menu) => {
-    let MenuIcon = Icon[menu.icon];
-    const subMenuList = menu.routes.filter((v) => !v.hideInMenu && v.title);
+    let MenuIcon = AntIcon[menu.icon];
+    const subMenuList = menu.routes.filter((v) => !v.hideInMenu && v.name);
     return (
-      <SubMenu key={menu.name} icon={<MenuIcon />} title={menu.title}>
+      <SubMenu key={menu.key} icon={<MenuIcon />} title={menu.name}>
         {renderMenu(subMenuList)}
       </SubMenu>
     );
   }
 
   const renderMenuItem = (menu) => {
-    let MenuIcon = Icon[menu.icon];
+    let MenuIcon = AntIcon[menu.icon];
     return (
       <MenuItem
-        key={menu.name}
+        key={menu.key}
         icon={<MenuIcon />}
-        onClick={() => onMenuClick(menu)}
       >
-        {menu.title}
+        <Link to={menu.path}>{menu.name}</Link>
       </MenuItem>
     )
   }
@@ -66,7 +59,7 @@ const AppMenu = ({ theme }) => {
       // defaultOpenKeys={activeKeys}
       selectedKeys={activeKeys}
     >
-      {renderMenu(menuList)}
+      {!!menuList.length && renderMenu(menuList)}
     </Menu>
   );
 };

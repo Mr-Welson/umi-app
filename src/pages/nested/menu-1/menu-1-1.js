@@ -4,6 +4,8 @@ import { Button } from 'antd';
 
 
 const FrontEnd = (props) => {
+  // console.log(' == Menu ==', props);
+  
   const linkToDetail = (pathname, pageTitle) => {
     history.push({
       pathname,
@@ -13,9 +15,9 @@ const FrontEnd = (props) => {
   return (
     <div>
       <h2> menu-1-1 </h2>
-      <Button onClick={() => linkToDetail("/nested/menu-1/menu-1-1/1", '详情1')
+      <Button onClick={() => linkToDetail("/nested/menu-1/menu-1-1/1", '1')
       }> menu-1-1/1 </Button>
-      <Button onClick={() => linkToDetail("/nested/menu-1/menu-1-1/2", '详情2')
+      <Button onClick={() => linkToDetail("/nested/menu-1/menu-1-1/2", '2')
       }> menu-1-1/2 </Button>
       <Link to="/"> 首页 </Link>
     </div>

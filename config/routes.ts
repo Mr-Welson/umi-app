@@ -9,11 +9,11 @@
       相对路径（会从 src/pages 开始找起）: 'index'
     routes 配置子路由
     wrappers (Type: string[]) 配置路由的高阶组件封装：比如，可以用于路由级别的权限校验
-    title: 路由标题
+    name: 路由标题
 
  * 自定义配置项
     icon: 菜单图标
-    name: 路由的唯一标识符
+    key: 路由的唯一标识符
     isLocal: 是否只在开发环境显示，如：Test 路由或临时路由
     hideInMenu: 是否显示在菜单，如详情页路由不需要显示在菜单
 
@@ -22,8 +22,8 @@
 export const constantRoutes = [
   {
     path: '/login',
-    name: 'login',
-    title: '登录',
+    key: 'login',
+    name: '登录',
     component: '@/pages/login',
     hideInMenu: true,
   }
@@ -32,117 +32,137 @@ export const constantRoutes = [
 export const pageRoutes = [
   {
     path: '/',
-    exact: true,
     redirect: '/home',
+    exact: true,
   },
   {
     path: '/home',
-    name: 'home',
+    key: 'home',
     component: '@/pages/home',
-    title: '首页',
+    name: '首页',
     icon: 'UserOutlined',
   },
   {
     path: '/about',
-    name: 'about',
+    key: 'about',
     component: '@/pages/about',
-    title: '关于',
+    name: '关于',
     icon: 'VideoCameraOutlined',
   },
   {
     path: '/nested',
-    name: 'nested',
     component: '@/layouts/nested',
-    title: '嵌套',
+    key: 'nested',
+    name: '嵌套',
     icon: 'UploadOutlined',
+    needRedirect: true,
     routes: [
       {
         path: '/nested',
-        exact: true,
         redirect: '/nested/menu-1/menu-1-1',
+        exact: true,
+        // key: 'nested',
+        // name: '嵌套',
+        // icon: 'UploadOutlined',
       },
       {
         path: '/nested/menu-1',
+        key: 'menu-1',
         name: 'menu-1',
-        title: 'menu-1',
         icon: 'VideoCameraOutlined',
+        needRedirect: true,
         routes: [
           {
             path: '/nested/menu-1',
             redirect: '/nested/menu-1/menu-1-1',
             exact: true,
+            // key: 'menu-1',
+            // name: 'menu-1',
+            // icon: 'VideoCameraOutlined',
           },
           {
             path: '/nested/menu-1/menu-1-1',
-            name: 'menu-1-1',
+            key: 'menu-1-1',
             component: '@/pages/nested/menu-1/menu-1-1',
-            title: 'menu-1-1',
+            name: 'menu-1-1',
             icon: 'VideoCameraOutlined',
-          },
-          {
-            path: '/nested/menu-1/menu-1-2',
-            name: 'menu-1-2',
-            component: '@/pages/nested/menu-1/menu-1-2',
-            title: 'menu-1-2',
-            icon: 'VideoCameraOutlined',
+            // routes: [
+            //   {
+            //     此种配置暂不生效，待完善
+            //     path: '/nested/menu-1/menu-1-1/:id',
+            //     key: 'menu-1-1-detail',
+            //     component: '@/pages/nested/menu-1/menu-1-1-detail',
+            //     name: 'menu-1-1 详情',
+            //     icon: 'VideoCameraOutlined',
+            //     hideInMenu: true,
+            //   },
+            // ],
           },
           {
             path: '/nested/menu-1/menu-1-1/:id',
-            name: 'menu-1-1-detail',
+            key: 'menu-1-1-detail',
             component: '@/pages/nested/menu-1/menu-1-1-detail',
-            title: 'menu-1-1 详情',
+            name: 'menu-1-1 详情',
             icon: 'VideoCameraOutlined',
-            hideInMenu: true,
-          }
+            hideInMenu: true
+          },
+          {
+            path: '/nested/menu-1/menu-1-2',
+            key: 'menu-1-2',
+            component: '@/pages/nested/menu-1/menu-1-2',
+            name: 'menu-1-2',
+            icon: 'VideoCameraOutlined',
+          },
         ]
       },
       {
         path: '/nested/menu-2',
-        name: 'menu-2',
+        key: 'menu-2',
         component: '@/pages/nested/menu-2',
-        title: 'menu-2',
+        name: 'menu-2',
         icon: 'VideoCameraOutlined',
       },
       {
-        path: '/nested/menu-2/:id',
-        name: 'menu-2-detail',
+        path: '/nested/menu-2-detail/:id?',
+        key: 'menu-2-detail',
         component: '@/pages/nested/menu-2/menu-2-detail',
-        title: 'menu 2 详情页',
+        name: 'menu 2 详情页',
         icon: 'VideoCameraOutlined',
         hideInMenu: true,
+        activeMenuName: 'menu-2'
       }
     ],
   },
   {
     path: '/test',
-    name: 'test',
-    title: '本地路由',
+    key: 'test',
+    name: '本地路由',
     isLocal: true,
     component: '@/pages/test',
     icon: 'VideoCameraOutlined',
   },
   {
     path: '/hide',
-    name: 'hideRoute',
-    title: '隐藏路由',
+    key: 'hideRoute',
+    name: '隐藏路由',
     hideInMenu: true,
     component: '@/pages/test',
     icon: 'VideoCameraOutlined',
   },
-  {
-    // name: '404',
-    // component: '@/pages/404',
-    hideInMenu: true,
-    redirect: '/404',
-  },
   // {
   //   path: '/404',
+  //   key: '404',
   //   name: '404',
-  //   title: '404',
   //   hideInMenu: true,
   //   component: '@/pages/404',
   //   icon: 'VideoCameraOutlined',
   // },
+  {
+    // key: '404',
+    component: '@/pages/404',
+    hideInMenu: true,
+    // redirect: '/404',
+  },
 ]
 
 export const asyncRoutes = [

@@ -24,7 +24,7 @@ const AvatarDropdown = () => {
   return (
     <Dropdown overlay={MenuHeaderDropdown}>
       <span>
-        <Avatar size="small" src={'/avatar.jpg'} alt="avatar" />
+        <Avatar size="small" src={'assets/avatar.jpg'} alt="avatar" />
         <span> 测试 </span>
       </span>
     </Dropdown>
