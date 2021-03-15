@@ -1,12 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from 'umi';
 
 const BackEnd = () => {
-
-  useEffect(() => {
-    console.log(111111);
-
-  }, [])
 
   return (
     <div>
