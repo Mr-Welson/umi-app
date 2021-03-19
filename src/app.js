@@ -2,7 +2,9 @@ import React from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import 'antd/dist/antd.css'
-import { getCache } from './utils/cache'
+import Utils from '@/utils';
+import Service from '@/service';
+
 
 /**
  * 运行时配置文件
@@ -12,16 +14,21 @@ import { getCache } from './utils/cache'
 
 export function getInitialState() {
   console.log('=====  getInitialState =====');
-  const tabList = getCache('zf_tab_list');
+  const tabList = Utils.getCache('zf_tab_list');
   return Promise.resolve({ tabList });
 }
 
 /**
 * render。
-* @desc 覆写 render, 比如用于渲染之前做权限校验，
+* @desc 覆写页面首次 render, 可在这里初始化页面数据，比如用于渲染之前做权限校验，
 * @param {*} oldRender 
 */
-export function render(oldRender) {
+export async function render(oldRender) {
+  console.log('=====  render =====');
+  const [result, error] = await Service.user.getUserPermissionByToken();
+  console.log(result);
+
+
   oldRender()
 }
 
@@ -32,7 +39,8 @@ export function render(oldRender) {
  * @param {*} routes
  */
 export function patchRoutes({ routes }) {
-  // console.log('=====  patchRoutes =====');
+  console.log('=====  patchRoutes =====');
+
   let pageRoutes = routes.find(v => v.path === '/').routes;
   // TODO: 过滤权限
   if (process.env.NODE_ENV === 'product') {

@@ -2,6 +2,7 @@ import { defineConfig } from 'umi';
 import routes from './routes';
 
 export default defineConfig({
+  ignoreMomentLocale: true, // 忽略 moment 的 locale 文件，用于减少尺寸
   nodeModulesTransform: {
     type: 'none',
   },

@@ -16,6 +16,7 @@
     key: 路由的唯一标识符
     isLocal: 是否只在开发环境显示，如：Test 路由或临时路由
     hideInMenu: 是否显示在菜单，如详情页路由不需要显示在菜单
+    needRedirect: 是否要重定向
 
  */
 
@@ -43,9 +44,65 @@ export const pageRoutes = [
     icon: 'UserOutlined',
   },
   {
-    path: '/about',
-    key: 'about',
-    component: '@/pages/about',
+    path: '/system',
+    key: 'system',
+    // component: '@/pages/system',
+    name: '系统管理',
+    icon: 'UserOutlined',
+    needRedirect: true,
+    routes: [
+      // {
+      //   path: '/system',
+      //   redirect: '/system/user',
+      //   exact: true,
+      // },
+      {
+        path: '/system/user',
+        key: 'systemUser',
+        component: '@/pages/system/user',
+        name: '用户管理',
+        icon: 'UserOutlined',
+      },
+      {
+        path: '/system/role',
+        key: 'systemRole',
+        component: '@/pages/system/role',
+        name: '角色管理',
+        icon: 'UserOutlined',
+      },
+      {
+        path: '/system/menu',
+        key: 'systemMenu',
+        component: '@/pages/system/menu',
+        name: '菜单管理',
+        icon: 'UserOutlined',
+      },
+      {
+        path: '/system/depart',
+        key: 'systemDepart',
+        component: '@/pages/system/depart',
+        name: '部门管理',
+        icon: 'UserOutlined',
+      },
+      {
+        path: '/system/dict',
+        key: 'systemDict',
+        component: '@/pages/system/dict',
+        name: '字典管理',
+        icon: 'UserOutlined',
+      },
+      {
+        // component: '@/pages/404',
+        redirect: '/system/user',
+        hideInMenu: true,
+      },
+    ]
+  },
+  {
+    path: '/test',
+    key: 'test',
+    isLocal: true,
+    component: '@/pages/test',
     name: '关于',
     icon: 'VideoCameraOutlined',
   },
@@ -61,9 +118,6 @@ export const pageRoutes = [
         path: '/nested',
         redirect: '/nested/menu-1/menu-1-1',
         exact: true,
-        // key: 'nested',
-        // name: '嵌套',
-        // icon: 'UploadOutlined',
       },
       {
         path: '/nested/menu-1',
@@ -76,9 +130,6 @@ export const pageRoutes = [
             path: '/nested/menu-1',
             redirect: '/nested/menu-1/menu-1-1',
             exact: true,
-            // key: 'menu-1',
-            // name: 'menu-1',
-            // icon: 'VideoCameraOutlined',
           },
           {
             path: '/nested/menu-1/menu-1-1',
@@ -134,38 +185,12 @@ export const pageRoutes = [
     ],
   },
   {
-    path: '/test',
-    key: 'test',
-    name: '本地路由',
-    isLocal: true,
-    component: '@/pages/test',
-    icon: 'VideoCameraOutlined',
-  },
-  {
-    path: '/hide',
-    key: 'hideRoute',
-    name: '隐藏路由',
-    hideInMenu: true,
-    component: '@/pages/test',
-    icon: 'VideoCameraOutlined',
-  },
-  // {
-  //   path: '/404',
-  //   key: '404',
-  //   name: '404',
-  //   hideInMenu: true,
-  //   component: '@/pages/404',
-  //   icon: 'VideoCameraOutlined',
-  // },
-  {
-    // key: '404',
     component: '@/pages/404',
     hideInMenu: true,
-    // redirect: '/404',
   },
 ]
 
-export const asyncRoutes = [
+export const layoutRoutes = [
   {
     path: '/',
     component: '@/layouts/basic',
@@ -174,5 +199,5 @@ export const asyncRoutes = [
 ]
 export default [
   ...constantRoutes,
-  ...asyncRoutes,
+  ...layoutRoutes,
 ];

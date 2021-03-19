@@ -1,4 +1,4 @@
-import Service from '../services'
+import Service from '../service'
 
 export default {
   namespace: 'settings',

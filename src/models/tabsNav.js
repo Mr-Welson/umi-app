@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { history } from 'umi';
-import { getCache, setCache } from '../utils/cache'
+import Utils from '@/utils';
 import _ from 'lodash';
 
 const indexRoute = {
@@ -41,7 +41,7 @@ export default function tabsNavModel() {
   // 页签初始化
   function initTabList() {
     const list = getCacheTabList();
-    !list.length && list.unshift({ ...indexRoute })
+    // !list.length && list.unshift({ ...indexRoute })
     setTabList(list)
   }
 
@@ -53,12 +53,12 @@ export default function tabsNavModel() {
 
   // 获取导航缓存
   function getCacheTabList() {
-    return getCache('zf_tab_list') || []
+    return Utils.getCache('zf_tab_list') || []
   }
 
   // 设置导航缓存
   function setCacheTabList(list) {
-    setCache('zf_tab_list', list || [])
+    Utils.setCache('zf_tab_list', list || [])
   }
 
   // 点击 Tab
@@ -112,7 +112,7 @@ export default function tabsNavModel() {
 
   // 关闭所有
   function closeAll() {
-    updateTabList([indexRoute]);
+    updateTabList([{...indexRoute}]);
     history.push('/home')
   }
 

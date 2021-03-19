@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Link, useModel, useLocation } from 'umi';
-import { Tabs, Dropdown } from 'antd';
+import { Tabs, Dropdown, Button } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
@@ -42,7 +42,8 @@ const TabsNav = ({ history }) => {
     e.preventDefault();
     contextMenuRef.current = item;
   }
-  const onRefresh = () => {
+  const onRefresh = (e) => {
+    // e.stopPropagation();
     const item = contextMenuRef.current;
     contextMenuRef.current = null;
     // updateTabItem(item)
@@ -66,45 +67,41 @@ const TabsNav = ({ history }) => {
   }
 
   return (
-    <>
-      <Tabs activeKey={activeTab.pathname} className="app-tab-list">
+    <Tabs activeKey={activeTab.pathname} className="app-tab-list">
+      {tabList.map((v) => {
+        const isHomePage = v.key === 'home';
+        const closeAble = tabList.length > 1;
+        return (
+          <TabPane
+            key={v.pathname}
+            tab={
+              <Dropdown
+                overlay={
+                  <div className="tab-context-menu">
+                    <Button type="link" block className="context-item" disabled={activeTab.pathname !== v.pathname} onClick={onRefresh}>刷新</Button>
+                    <Button type="link" block className="context-item" disabled={isHomePage || !closeAble} onClick={onClose}>关闭</Button>
+                    <Button type="link" className="context-item" disabled={!closeAble} onClick={onCloseOther}>关闭其他</Button>
+                    <Button type="link" className="context-item" disabled={isHomePage || !closeAble} onClick={closeAll}>关闭所有</Button>
+                  </div>
+                }
+                placement="bottomLeft"
+                trigger={['contextMenu']}
+              >
+                <Link to={v.location} onContextMenu={(e) => onContextMenu(e, v)}>
+                  <div className="app-tab-item" >
+                    <span>{v.name}</span>
+                    {tabList.length > 1 && !isHomePage && (
+                      <CloseOutlined onClick={(e) => onTabClose(e, v)} />
+                    )}
+                  </div>
+                </Link>
+              </Dropdown>
 
-
-        {tabList.map((v) => {
-          const isHomePage = v.key === 'home';
-          return (
-            <TabPane
-              key={v.pathname}
-              tab={
-                <Dropdown
-                  overlay={
-                    <ul className="tab-context-menu">
-                      <li className="context-item" disabled={activeTab.pathname !== v.pathname} onClick={onRefresh}>刷新</li>
-                      <li className="context-item" disabled={isHomePage} onClick={onClose}>关闭</li>
-                      <li className="context-item" onClick={onCloseOther}>关闭其他</li>
-                      <li className="context-item" disabled={isHomePage} onClick={closeAll}>关闭所有</li>
-                    </ul>
-                  }
-                  placement="bottomLeft"
-                  trigger={['contextMenu']}
-                >
-                  <Link to={v.location} onContextMenu={(e) => onContextMenu(e, v)}>
-                    <div className="app-tab-item" >
-                      <span>{v.name}</span>
-                      {tabList.length > 1 && !isHomePage &&(
-                        <CloseOutlined onClick={(e) => onTabClose(e, v)} />
-                      )}
-                    </div>
-                  </Link>
-                </Dropdown>
-
-              }
-            ></TabPane>
-          )
-        })}
-      </Tabs >
-
-    </>
+            }
+          ></TabPane>
+        )
+      })}
+    </Tabs >
   );
 };
 

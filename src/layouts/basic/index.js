@@ -11,6 +11,11 @@ const { Sider, Content } = Layout;
 
 const BasicLayout = ({ theme, collapsed, location, ...rest }) => {
   // console.log('=== BasicLayout ===', rest);
+  
+  // Did Mount
+  useEffect(() => {
+    
+  }, [])
 
   // const { initialState } = useModel('@@initialState');
   const { flatRoutes, generateMenuList, initRoutes, onPathNameChange } = useModel('permission');
